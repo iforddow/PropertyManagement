@@ -1,0 +1,35 @@
+.root {
+    background-color: var(--mantine-color-secondary-1);
+    border: 1px solid var(--mantine-color-secondary-7);
+}
+
+.icon {
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+}
+
+.body {
+
+}
+
+.title {
+
+}
+
+.description {
+
+}
+
+.closeButton {
+
+}
+
+
+@media (hover: hover) {
+    .closeButton:hover {
+        background-color: var(--mantine-color-secondary-5);
+        opacity: 0.5;
+        color: var(--mantine-color-white);
+    }
+}
