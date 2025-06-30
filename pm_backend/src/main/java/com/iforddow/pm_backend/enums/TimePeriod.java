@@ -1,4 +1,4 @@
-package com.iforddow.pm_backend.utils;
+package com.iforddow.pm_backend.enums;
 
 public enum TimePeriod {
     DAILY,

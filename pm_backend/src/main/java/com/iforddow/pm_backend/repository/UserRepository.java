@@ -1,12 +1,12 @@
 package com.iforddow.pm_backend.repository;
-import com.iforddow.pm_backend.jpa.entity.User;
+import com.iforddow.pm_backend.jpa.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
-    Optional<User> findByEmail(String email);
+    Optional<UserEntity> findByEmail(String email);
 
 }

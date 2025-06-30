@@ -10,7 +10,12 @@ export interface AuthContextType {
   user: UserType | null;
   isAuthenticated: boolean;
   accessToken: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    confirmPassword: string,
+  ) => Promise<void>;
   logout: () => Promise<void>;
   refresh: () => Promise<boolean>;
 }

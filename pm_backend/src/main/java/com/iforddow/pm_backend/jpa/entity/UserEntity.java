@@ -1,13 +1,12 @@
 package com.iforddow.pm_backend.jpa.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,8 +21,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "\"user\"")
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
     @Id
+    @UuidGenerator
     @ColumnDefault("uuid_generate_v4()")
     @Column(name = "id", nullable = false)
     private UUID id;

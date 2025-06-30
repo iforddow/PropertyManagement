@@ -1,6 +1,7 @@
 .root {
     background-color: var(--mantine-color-orange-1);
     border: 1px solid var(--mantine-color-orange-7);
+    z-index: 1000;
 }
 
 .icon {
@@ -14,7 +15,7 @@
 }
 
 .title {
-
+    color: var(--mantine-color-orange-7);
 }
 
 .description {

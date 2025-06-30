@@ -1,6 +1,6 @@
 package com.iforddow.pm_backend.dto;
 
-import com.iforddow.pm_backend.jpa.entity.User;
+import com.iforddow.pm_backend.jpa.entity.UserEntity;
 import java.util.UUID;
 
 /**
@@ -19,7 +19,7 @@ public record UserDTO(UUID id, String email) {
      * @author IFD
      * @since 2025-06-14
      * */
-    public UserDTO(User user) {
+    public UserDTO(UserEntity user) {
         this(user.getId(), user.getEmail());
     }
 

@@ -5,7 +5,7 @@ import com.iforddow.pm_backend.exception.BadRequestException;
 import com.iforddow.pm_backend.exception.InvalidCredentialsException;
 import com.iforddow.pm_backend.exception.ResourceExistsException;
 import com.iforddow.pm_backend.exception.ResourceNotFoundException;
-import com.iforddow.pm_backend.jpa.entity.User;
+import com.iforddow.pm_backend.jpa.entity.UserEntity;
 import com.iforddow.pm_backend.repository.UserRepository;
 import com.iforddow.pm_backend.requests.LoginRequest;
 import com.iforddow.pm_backend.requests.RegisterRequest;
@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+
+import static com.iforddow.pm_backend.utils.PmUtils.isNullOrEmpty;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +56,10 @@ public class AuthService {
      * @since  2025-06-14
      * */
     @Transactional
-    public ResponseEntity<UserDTO> register(RegisterRequest registerRequest) {
+    public ResponseEntity<Map<String, Object>> register(RegisterRequest registerRequest, HttpServletResponse response) {
 
         // Check to ensure the email is not null or empty
-        if(registerRequest.getEmail() == null || registerRequest.getEmail().isEmpty()) {
+        if(isNullOrEmpty(registerRequest.getEmail())) {
             throw new BadRequestException("Email is required");
         }
 
@@ -66,12 +68,12 @@ public class AuthService {
         }
 
         // Check to ensure the password is not null or empty
-        if(PmUtils.isNullOrEmpty(registerRequest.getPassword())) {
+        if(isNullOrEmpty(registerRequest.getPassword())) {
             throw new BadRequestException("Password is required");
         }
 
         // Check to ensure confirmation password is not null or empty
-        if(PmUtils.isNullOrEmpty(registerRequest.getConfirmPassword())) {
+        if(isNullOrEmpty(registerRequest.getConfirmPassword())) {
             throw new BadRequestException("Confirmation password is required");
         }
 
@@ -88,7 +90,7 @@ public class AuthService {
         }
 
         // Check to ensure the password is not null or empty
-        Optional<User> existingUser = userRepository.findByEmail(registerRequest.getEmail());
+        Optional<UserEntity> existingUser = userRepository.findByEmail(registerRequest.getEmail());
 
         // If a user with the same email already exists, throw an exception
         if(existingUser.isPresent()) {
@@ -96,21 +98,26 @@ public class AuthService {
         }
 
         // Create a new user
-        User user = User.builder()
+        UserEntity user = UserEntity.builder()
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .lastActive(new Date().toInstant())
                 .createdAt(new Date().toInstant())
+                .credentialsExpired(false)
+                .enabled(true)
+                .locked(false)
+                .expired(false)
                 .build();
 
         // Save the user to the database
         userRepository.save(user);
 
-        // Create a UserDTO to return
-        UserDTO userDTO = new UserDTO(user);
+        LoginRequest loginRequest = new LoginRequest();
 
-        // Return the UserDTO wrapped in a ResponseEntity
-        return ResponseEntity.ok(userDTO);
+        loginRequest.setEmail(registerRequest.getEmail());
+        loginRequest.setPassword(registerRequest.getPassword());
+
+        return login(loginRequest, response);
 
     }
 
@@ -128,16 +135,16 @@ public class AuthService {
      * */
     public ResponseEntity<Map<String, Object>> login(LoginRequest loginRequest, HttpServletResponse response) {
 
-        Optional<User> user = userRepository.findByEmail(loginRequest.getUsername());
+        Optional<UserEntity> user = userRepository.findByEmail(loginRequest.getEmail());
 
         // Check if the user exists
         if(user.isEmpty()) {
-            throw new ResourceNotFoundException("User not found with email: " + loginRequest.getUsername());
+            throw new ResourceNotFoundException("User not found with email: " + loginRequest.getEmail());
         }
 
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -151,8 +158,8 @@ public class AuthService {
             throw new BadRequestException("Authentication failed: " + ex.getMessage());
         }
 
-        String accessToken = jwtService.generateJwtToken(loginRequest.getUsername());
-        String refreshToken = jwtService.generateRefreshToken(loginRequest.getUsername());
+        String accessToken = jwtService.generateJwtToken(loginRequest.getEmail());
+        String refreshToken = jwtService.generateRefreshToken(loginRequest.getEmail());
 
         Cookie refreshCookie = new Cookie("pm_rt", refreshToken);
 
@@ -189,7 +196,7 @@ public class AuthService {
             String newAccessToken = jwtService.generateJwtToken(username);
 
             // Get the user from the database
-            Optional<User> user = userRepository.findByEmail(username);
+            Optional<UserEntity> user = userRepository.findByEmail(username);
 
             if (user.isEmpty()) {
                 throw new ResourceNotFoundException("User not found with email: " + username);

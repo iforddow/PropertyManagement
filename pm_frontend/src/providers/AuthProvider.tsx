@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Ref to hold the timeout for refreshing the access token
   const refreshTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { setLoading } = useGlobalLoading();
+  const { setGlobalLoading } = useGlobalLoading();
 
   /* 
   Clear the refresh timeout if it exists.
@@ -97,14 +97,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   */
   useEffect(() => {
     const tryRefresh = async () => {
-      setLoading(true);
+      setGlobalLoading(true);
       const refreshed = await refresh();
       if (!refreshed) {
         setUser(null);
         setIsAuthenticated(false);
         setAccessToken(null);
       }
-      setLoading(false);
+      setGlobalLoading(false);
     };
     tryRefresh();
   }, []);
@@ -122,13 +122,59 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   @author IFD
   @date 2025-06-15
   */
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     await axios
       .post(
         `${PM_API_ENDPOINTS.AUTH.LOGIN}`,
         {
-          username,
+          email,
           password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        const { user, accessToken } = response.data;
+        setAccessToken(accessToken);
+        setIsAuthenticated(true);
+        setUser(user || {});
+      })
+      .catch((error) => {
+        setUser(null);
+        setIsAuthenticated(false);
+        setAccessToken(null);
+        throw error;
+      });
+  };
+
+  /* 
+  A function to register a new user by sending a POST request
+  to the register endpoint with the provided username and password,
+  and confirm password fields.
+
+  @param username - The username of the user trying to register.
+  @param password - The password of the user trying to register.
+  @param confirmPassword - The confirmation password for the user trying to register.
+
+  @author IFD
+  @date 2025-06-30
+  */
+  const register = async (
+    email: string,
+    password: string,
+    confirmPassword: string,
+  ) => {
+    console.log("Register payload:", { email, password, confirmPassword }); // Add this line
+
+    await axios
+      .post(
+        `${PM_API_ENDPOINTS.AUTH.REGISTER}`,
+        {
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -160,7 +206,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   @date 2025-06-15
   */
   const refresh = async () => {
-    setLoading(true);
+    setGlobalLoading(true);
 
     let refreshed = false;
 
@@ -183,7 +229,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         refreshed = false;
       })
       .finally(() => {
-        setLoading(false);
+        setGlobalLoading(false);
       });
 
     return refreshed;
@@ -221,6 +267,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isAuthenticated,
     accessToken,
     login,
+    register,
     logout,
     refresh,
   };

@@ -8,6 +8,7 @@
   position: relative;
   box-sizing: border-box;
   animation: rotation 2s linear infinite;
+  z-index: 1000;
 }
 .loader::after {
   content: '';  

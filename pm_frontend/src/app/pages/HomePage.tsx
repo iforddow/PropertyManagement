@@ -1,10 +1,12 @@
-import { Button } from "@mantine/core";
+import { Button, Title } from "@mantine/core";
 import {
   showErrorNotification,
   showInfoNotification,
   showSuccessNotification,
   showWarningNotification,
 } from "../../lib/utils/NotificationManager";
+import ThemeToggleButton from "../../features/theme/components/ThemeToggleButton";
+import DefaultLayout from "../../components/layout/DefaultLayout";
 
 /* 
 The HomePage component serves as the main entry point of the application.
@@ -14,8 +16,8 @@ The HomePage component serves as the main entry point of the application.
 */
 export default function HomePage() {
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
+    <DefaultLayout>
+      <Title>Welcome to the Home Page</Title>
       <p>This is the main entry point of the application.</p>
       <Button
         variant="gradient"
@@ -28,6 +30,7 @@ export default function HomePage() {
       >
         Hello
       </Button>
-    </div>
+      <ThemeToggleButton />
+    </DefaultLayout>
   );
 }

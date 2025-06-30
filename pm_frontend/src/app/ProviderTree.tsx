@@ -24,6 +24,9 @@ export default function ProviderTree({ child }: { child: React.ReactElement }) {
               notification: {
                 borderRadius: "0.5rem",
               },
+              root: {
+                zIndex: 1000,
+              },
             }}
           />
           {child}

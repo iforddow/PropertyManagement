@@ -1,5 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "../pages/HomePage";
+import AuthBanner from "../../features/auth/components/AuthBanner";
+import AuthPage from "../pages/AuthPage";
 
 /* 
 The AppRouter component defines the main routing structure of the application.
@@ -13,7 +15,16 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+
+        {/* Authentication Routes */}
+        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/login"
+          element={<Navigate to="/auth?login=true" replace />}
+        />
+        <Route path="/signup" element={<Navigate to="/auth" replace />} />
       </Routes>
+      <AuthBanner />
     </BrowserRouter>
   );
 }

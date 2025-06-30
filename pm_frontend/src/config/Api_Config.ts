@@ -9,9 +9,9 @@ A collection of API endpoints for the Property Management application.
 */
 export const PM_API_ENDPOINTS = {
   AUTH: {
-    LOGIN: `${PM_API_BASE_URL}/login`,
-    REGISTER: `${PM_API_BASE_URL}/register`,
-    LOGOUT: `${PM_API_BASE_URL}/logout`,
-    REFRESH: `${PM_API_BASE_URL}/refresh`,
+    LOGIN: `${PM_API_BASE_URL}/auth/login`,
+    REGISTER: `${PM_API_BASE_URL}/auth/register`,
+    LOGOUT: `${PM_API_BASE_URL}/auth/logout`,
+    REFRESH: `${PM_API_BASE_URL}/auth/refresh`,
   },
 };

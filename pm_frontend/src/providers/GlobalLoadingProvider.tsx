@@ -18,7 +18,7 @@ export const GlobalLoadingProvider = ({
 }) => {
   // This hook is used to manage loading state in components.
   // It provides a simple way to show and hide loading indicators.
-  const [loading, setLoading] = useState(true);
+  const [globalLoading, setGlobalLoading] = useState(true);
 
   /* 
   A context value that provides the loading state and functions
@@ -29,14 +29,14 @@ export const GlobalLoadingProvider = ({
   @date 2025-06-15
   */
   const value: GlobalLoadingContextType = {
-    loading,
-    setLoading,
+    globalLoading,
+    setGlobalLoading,
   };
 
   return (
     <GlobalLoadingContext.Provider value={value}>
       <LoadingOverlay
-        visible={loading}
+        visible={globalLoading}
         zIndex={1000}
         overlayProps={{ blur: 1 }}
         loaderProps={{
