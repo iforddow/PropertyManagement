@@ -1,6 +1,8 @@
-package com.iforddow.pm_backend.dto;
+package com.iforddow.pm_backend.dto.user;
 
-import com.iforddow.pm_backend.entity.jpa.entity.UserEntity;
+import com.iforddow.pm_backend.entity.entity.user.User;
+import com.iforddow.pm_backend.entity.jpa.entity.UserAuth;
+
 import java.util.UUID;
 
 /**
@@ -12,14 +14,14 @@ import java.util.UUID;
 public record UserDTO(UUID id, String email) {
 
     /**
-     * A constructor to create a UserDTO from a User entity.
-     *
-     * @param user The User entity to convert.
-     *
-     * @author IFD
-     * @since 2025-06-14
-     * */
-    public UserDTO(UserEntity user) {
+    * A constructor to create a UserDTO from a User entity.
+    *
+    * @param user The User entity to convert.
+    *
+    * @author IFD
+    * @since 2025-07-01
+    * */
+    public UserDTO(User user) {
         this(user.getId(), user.getEmail());
     }
 

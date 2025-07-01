@@ -166,8 +166,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     confirmPassword: string,
   ) => {
-    console.log("Register payload:", { email, password, confirmPassword }); // Add this line
-
     await axios
       .post(
         `${PM_API_ENDPOINTS.AUTH.REGISTER}`,
@@ -227,6 +225,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(false);
         setAccessToken(null);
         refreshed = false;
+        throw error;
       })
       .finally(() => {
         setGlobalLoading(false);
@@ -244,14 +243,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   @date 2025-06-15
   */
   const logout = async () => {
-    await axios.post(
-      PM_API_ENDPOINTS.AUTH.LOGOUT,
-      {},
-      { withCredentials: true },
-    );
-    setUser(null);
-    setIsAuthenticated(false);
-    setAccessToken(null);
+    setGlobalLoading(true);
+
+    await axios
+      .post(PM_API_ENDPOINTS.AUTH.LOGOUT, {}, { withCredentials: true })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+        throw error;
+      })
+      .finally(() => {
+        setUser(null);
+        setIsAuthenticated(false);
+        setAccessToken(null);
+        setGlobalLoading(false);
+      });
   };
 
   /* 

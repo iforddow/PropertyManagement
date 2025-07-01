@@ -5,6 +5,7 @@ import { showErrorNotification } from "../../../lib/utils/NotificationManager";
 import { ActionIcon, Button, Space, TextInput } from "@mantine/core";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import { validatePassword } from "../../../lib/utils/PasswordValidator";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm({
   startLoading,
@@ -15,6 +16,9 @@ export default function RegisterForm({
 }) {
   // Use the custom authentication context to access login functionality
   const { register } = useAuth();
+
+  // Use the useNavigate hook from react-router-dom for navigation
+  const navigate = useNavigate();
 
   //Effect to show or hide the password
   const [showPassword, setShowPassword] = useState(false);
@@ -93,6 +97,18 @@ export default function RegisterForm({
     startLoading();
 
     await register(values.email, password, confirmPassword)
+      .then(() => {
+        navigate("/", { replace: true });
+
+        /* 
+        Note:
+
+        This eventully should be some sort of onboarding process
+        or redirect to a welcome page. For now, we just redirect 
+        to the home page.
+        
+        */
+      })
       .catch((error) => {
         const status = error?.response?.status;
 

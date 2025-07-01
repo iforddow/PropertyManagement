@@ -56,7 +56,7 @@ export const defaultTheme = createTheme({
   black: "#0B1215",
 
   // Default white color
-  white: "#ECECEC",
+  white: "#F8F8FF",
 
   //! COLOR SETTINGS
 

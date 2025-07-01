@@ -2,6 +2,7 @@ import { Avatar, Box, Grid, Group } from "@mantine/core";
 import HouseLogo from "../../../images/HouseLogo";
 import HeaderNavButton from "./components/HeaderNavButton";
 import { IconUsers } from "@tabler/icons-react";
+import UserAvatarMenu from "../../../../features/user/components/UserAvatarMenu";
 
 /* 
 A Header component that displays the application header with a 
@@ -59,7 +60,7 @@ export default function Header() {
           <Group>
             <Avatar />
             <Avatar />
-            <Avatar />
+            <UserAvatarMenu />
           </Group>
         </Grid.Col>
       </Grid>

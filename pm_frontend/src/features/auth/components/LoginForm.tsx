@@ -4,6 +4,7 @@ import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import { useState } from "react";
 import useAuth from "../../../hooks/AuthenticationHook";
 import { showErrorNotification } from "../../../lib/utils/NotificationManager";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm({
   startLoading,
@@ -14,6 +15,9 @@ export default function LoginForm({
 }) {
   // Use the custom authentication context to access login functionality
   const { login } = useAuth();
+
+  // Use the useNavigate hook from react-router-dom for navigation
+  const navigate = useNavigate();
 
   //Effect to show or hide the password
   const [showPassword, setShowPassword] = useState(false);
@@ -63,6 +67,11 @@ export default function LoginForm({
     startLoading();
 
     await login(values.email, password)
+      .then(() => {
+        navigate("/", { replace: true });
+
+        // Login successful, you can redirect or show a success message
+      })
       .catch((error) => {
         const status = error?.response?.status;
 

@@ -1,4 +1,4 @@
-package com.iforddow.pm_backend.entity.property;
+package com.iforddow.pm_backend.entity.entity.property;
 import com.iforddow.pm_backend.enums.PropertyType;
 import com.iforddow.pm_backend.enums.TimePeriod;
 import lombok.Getter;

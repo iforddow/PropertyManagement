@@ -14,14 +14,17 @@ import {
 import EmptyLayout from "../../components/layout/EmptyLayout";
 import { useState } from "react";
 import classes from "../../css/tabs/FloatingAuthTabs.module.css";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import LoginForm from "../../features/auth/components/LoginForm";
 import useLoading from "../../hooks/LoadingHook";
 import ExternalAuthForm from "../../features/auth/components/ExternalAuthForm";
 import RegisterForm from "../../features/auth/components/RegisterForm";
+import useAuth from "../../hooks/AuthenticationHook";
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
+
+  const { isAuthenticated } = useAuth();
 
   const defaultTab = searchParams.get("login") === "true" ? "login" : "signup";
 
@@ -37,6 +40,10 @@ export default function AuthPage() {
     tabControlsRefs[val] = node;
     setTabControlsRefs(tabControlsRefs);
   };
+
+  if (isAuthenticated) {
+    return <Navigate to={"/"} replace={true} />;
+  }
 
   return (
     <EmptyLayout>
