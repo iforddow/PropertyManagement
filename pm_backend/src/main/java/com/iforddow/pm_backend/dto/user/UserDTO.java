@@ -1,6 +1,6 @@
 package com.iforddow.pm_backend.dto;
 
-import com.iforddow.pm_backend.jpa.entity.UserEntity;
+import com.iforddow.pm_backend.entity.jpa.entity.UserEntity;
 import java.util.UUID;
 
 /**
