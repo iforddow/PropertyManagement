@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { type AuthContextType } from "../lib/types/AuthContextType";
+import { type AuthContextType } from "../lib/types/context_types/AuthContextType";
 
 /* 
 A React context for managing authentication state.

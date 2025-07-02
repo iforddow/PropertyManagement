@@ -1,7 +1,6 @@
 package com.iforddow.pm_backend.dto.user;
 
 import com.iforddow.pm_backend.entity.entity.user.User;
-import com.iforddow.pm_backend.entity.jpa.entity.UserAuth;
 
 import java.util.UUID;
 
@@ -11,7 +10,7 @@ import java.util.UUID;
  * @author IFD
  * @since 2025-06-14
  * */
-public record UserDTO(UUID id, String email) {
+public record MiniUserDTO(UUID id, String email) {
 
     /**
     * A constructor to create a UserDTO from a User entity.
@@ -21,7 +20,7 @@ public record UserDTO(UUID id, String email) {
     * @author IFD
     * @since 2025-07-01
     * */
-    public UserDTO(User user) {
+    public MiniUserDTO(User user) {
         this(user.getId(), user.getEmail());
     }
 

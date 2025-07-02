@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { type GlobalLoadingContextType } from "../lib/types/GlobalLoadingContextType";
+import { type GlobalLoadingContextType } from "../lib/types/context_types/GlobalLoadingContextType";
 
 /* 
 A React context for managing global loading state.

@@ -4,6 +4,7 @@ import { GlobalLoadingProvider } from "../providers/GlobalLoadingProvider";
 import { AuthProvider } from "../providers/AuthProvider";
 import { defaultTheme } from "../config/Theme";
 import { Notifications } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
 /* 
 A React component that wraps the application in multiple providers.
@@ -18,18 +19,20 @@ export default function ProviderTree({ child }: { child: React.ReactElement }) {
     <MantineProvider theme={defaultTheme} defaultColorScheme="auto">
       <GlobalLoadingProvider>
         <AuthProvider>
-          <Notifications
-            limit={5}
-            styles={{
-              notification: {
-                borderRadius: "0.5rem",
-              },
-              root: {
-                zIndex: 1000,
-              },
-            }}
-          />
-          {child}
+          <ModalsProvider>
+            <Notifications
+              limit={5}
+              styles={{
+                notification: {
+                  borderRadius: "0.5rem",
+                },
+                root: {
+                  zIndex: 1000,
+                },
+              }}
+            />
+            {child}
+          </ModalsProvider>
         </AuthProvider>
       </GlobalLoadingProvider>
     </MantineProvider>

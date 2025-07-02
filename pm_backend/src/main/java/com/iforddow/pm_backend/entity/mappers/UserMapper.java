@@ -1,6 +1,7 @@
 package com.iforddow.pm_backend.entity.mappers;
 
-import com.iforddow.pm_backend.dto.user.UserDTO;
+import com.iforddow.pm_backend.dto.user.FullUserDTO;
+import com.iforddow.pm_backend.dto.user.MiniUserDTO;
 import com.iforddow.pm_backend.entity.entity.user.User;
 import com.iforddow.pm_backend.entity.jpa.entity.UserAuth;
 import com.iforddow.pm_backend.entity.jpa.entity.UserProfile;
@@ -22,6 +23,7 @@ public interface UserMapper {
     UserProfile toProfileEntity(User user);
 
     // Conversion methods for DTOs
-    UserDTO toDTO(User user);
+    MiniUserDTO toMiniDTO(User user);
+    FullUserDTO toFullDTO(User user);
 
 }

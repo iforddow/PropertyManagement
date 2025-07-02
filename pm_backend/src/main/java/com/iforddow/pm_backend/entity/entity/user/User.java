@@ -1,10 +1,9 @@
 package com.iforddow.pm_backend.entity.entity.user;
 
-import com.iforddow.pm_backend.entity.jpa.entity.Address;
+import com.iforddow.pm_backend.entity.entity.property.Address;
 import com.iforddow.pm_backend.enums.ProfileType;
 import lombok.Getter;
 import lombok.Setter;
-import org.locationtech.jts.geom.Point;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -23,6 +22,7 @@ public class User {
     private boolean credentialsExpired;
     private boolean enabled;
     private Instant lastActive;
+    private boolean emailConfirmed;
 
     //Profile related fields
     private String firstName;
@@ -31,6 +31,7 @@ public class User {
     private String profilePictureUrl;
     private Address address;
     private ProfileType profileType;
+    private boolean profileSetup;
 
 
     @Override

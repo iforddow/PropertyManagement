@@ -1,6 +1,6 @@
 package com.iforddow.pm_backend.service;
 
-import com.iforddow.pm_backend.dto.user.UserDTO;
+import com.iforddow.pm_backend.dto.user.FullUserDTO;
 import com.iforddow.pm_backend.entity.jpa.entity.UserAuth;
 import com.iforddow.pm_backend.entity.jpa.entity.UserProfile;
 import com.iforddow.pm_backend.entity.mappers.UserMapper;
@@ -148,7 +148,7 @@ public class AuthService {
         response.addCookie(refreshCookie);
 
         //Make UserDTO
-        UserDTO userDTO = userMapper.toDTO(userMapper.toUser(userAuth.get(), userProfile.get()));
+        FullUserDTO userDTO = userMapper.toFullDTO(userMapper.toUser(userAuth.get(), userProfile.get()));
 
         return ResponseEntity.ok(Map.of("user", userDTO, "accessToken", accessToken));
 
@@ -191,7 +191,7 @@ public class AuthService {
             // Save the updated user back to the database
             userAuthRepository.save(userAuth.get());
 
-            UserDTO userDTO = userMapper.toDTO(userMapper.toUser(userAuth.get(), userProfile.get()));
+            FullUserDTO userDTO = userMapper.toFullDTO(userMapper.toUser(userAuth.get(), userProfile.get()));
 
             return ResponseEntity.ok(Map.of("accessToken", newAccessToken, "user", userDTO));
 

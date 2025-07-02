@@ -35,7 +35,7 @@ public class UserService {
 
         userAuthRepository.save(user);
 
-        UserProfile userProfile = UserProfile.builder().userAuth(user).build();
+        UserProfile userProfile = UserProfile.builder().userAuth(user).profileSetup(false).build();
 
         userProfileRepository.save(userProfile);
     }

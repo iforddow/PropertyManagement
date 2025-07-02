@@ -1,9 +1,9 @@
 import axios from "axios";
 import { PM_API_ENDPOINTS } from "../config/Api_Config";
-import type { AuthContextType } from "../lib/types/AuthContextType";
+import type { AuthContextType } from "../lib/types/context_types/AuthContextType";
 import { AuthContext } from "../context/AuthProvider";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import type { UserType } from "../lib/types/UserType";
+import type { UserType } from "../lib/types/entity_types/UserType";
 import { useGlobalLoading } from "../hooks/GlobalLoadingHook";
 import { jwtDecode } from "jwt-decode";
 

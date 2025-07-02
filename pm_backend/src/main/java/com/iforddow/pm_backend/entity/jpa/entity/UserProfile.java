@@ -53,4 +53,9 @@ public class UserProfile {
     @Column(name = "profile_type", length = 20)
     private String profileType;
 
+    @NotNull
+    @ColumnDefault("false")
+    @Column(name = "profile_setup", nullable = false)
+    private Boolean profileSetup = false;
+
 }

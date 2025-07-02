@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import type { GlobalLoadingContextType } from "../lib/types/GlobalLoadingContextType";
+import type { GlobalLoadingContextType } from "../lib/types/context_types/GlobalLoadingContextType";
 import { GlobalLoadingContext } from "../context/LoadingContext";
 import { Box, Loader, LoadingOverlay } from "@mantine/core";
 

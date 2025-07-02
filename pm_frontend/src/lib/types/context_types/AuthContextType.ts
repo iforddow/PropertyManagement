@@ -1,4 +1,4 @@
-import type { UserType } from "./UserType";
+import type { UserType } from "../entity_types/UserType";
 
 /* 
 A TypeScript interface for the authentication context.
